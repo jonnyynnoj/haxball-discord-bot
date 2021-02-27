@@ -6,7 +6,7 @@ const client = new Discord.Client();
 const commandPrefix = '!';
 
 const createRoom = async (haxroomie, token) => {
-    const room = await haxroomie.addRoom('example');
+    const room = await haxroomie.addRoom(token);
 
     return room.openRoom({
         roomName: 'haxroomie',
@@ -48,7 +48,13 @@ const start = async () => {
                 const room = await createRoom(haxroomie, token);
                 message.reply(`Here's your room link: ${room.roomLink}`);
             } catch (e) {
-                message.reply(`Failed to create a room: ${e.message}`);
+                let errorMessage = e.message;
+                if (errorMessage === 'id must be unique') {
+                    errorMessage = 'Token already used. Please obtain another from https://www.haxball.com/headlesstoken';
+                }
+
+                message.reply(`Failed to create a room: ${errorMessage}`);
+                console.log(e);
             }
         }
     });
