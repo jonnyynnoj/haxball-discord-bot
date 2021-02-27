@@ -5,7 +5,7 @@ const config = require('../config.json');
 const client = new Discord.Client();
 const commandPrefix = '!';
 
-const createRoom = async (haxroomie) => {
+const createRoom = async (haxroomie, token) => {
     const room = await haxroomie.addRoom('example');
 
     return room.openRoom({
@@ -13,9 +13,11 @@ const createRoom = async (haxroomie) => {
         playerName: 'host',
         maxPlayers: 10,
         public: false,
-        token: process.env.HAXBALL_TOKEN
+        token
     });
 };
+
+const findTokenInArgs = args => args.find(arg => arg.startsWith('thr1'));
 
 const start = async () => {
     const haxroomie = await createHaxroomie({
@@ -37,7 +39,13 @@ const start = async () => {
 
         if (command == 'createroom') {
             try {
-                const room = await createRoom(haxroomie);
+                const token = findTokenInArgs(args);
+
+                if (!token) {
+                    throw new Error('No headless token provided');
+                }
+
+                const room = await createRoom(haxroomie, token);
                 message.reply(`Here's your room link: ${room.roomLink}`);
             } catch (e) {
                 message.reply(`Failed to create a room: ${e.message}`);
