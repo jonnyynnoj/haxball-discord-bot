@@ -42,16 +42,19 @@ const start = async () => {
                 const token = findTokenInArgs(args);
 
                 if (!token) {
-                    throw new Error('No headless token provided');
+                    throw new Error(
+                        'No headless token provided.\n'+
+                        'You can obtain one from https://www.haxball.com/headlesstoken and then use it like\n' + 
+                        '`!createroom thr1.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`'
+                    );
                 }
 
                 const room = await createRoom(haxroomie, token);
                 message.reply(`Here's your room link: ${room.roomLink}`);
             } catch (e) {
-                let errorMessage = e.message;
-                if (errorMessage === 'id must be unique') {
-                    errorMessage = 'Token already used. Please obtain another from https://www.haxball.com/headlesstoken';
-                }
+                const errorMessage = e.message === 'id must be unique'
+                    ? 'Token already used. Please obtain another from https://www.haxball.com/headlesstoken'
+                    : e.message;
 
                 message.reply(`Failed to create a room: ${errorMessage}`);
                 console.log(e);
