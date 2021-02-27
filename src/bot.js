@@ -10,9 +10,9 @@ const createRoom = async (haxroomie, token) => {
 
     return room.openRoom({
         roomName: 'haxroomie',
-        playerName: 'host',
         maxPlayers: 10,
         public: false,
+        noPlayer: true,
         token
     });
 };
