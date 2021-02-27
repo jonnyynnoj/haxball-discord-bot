@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const { createHaxroomie } = require('haxroomie-core');
-const config = require('../config');
+const config = require('../config.json');
 
 const client = new Discord.Client();
 const commandPrefix = '!';
