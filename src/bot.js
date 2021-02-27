@@ -1,21 +1,11 @@
+const crypto = require('crypto');
 const Discord = require('discord.js');
 const { createHaxroomie } = require('haxroomie-core');
+const createRoom = require('./room');
 const config = require('../config.json');
 
 const client = new Discord.Client();
 const commandPrefix = '!';
-
-const createRoom = async (haxroomie, token) => {
-    const room = await haxroomie.addRoom(token);
-
-    return room.openRoom({
-        roomName: 'haxroomie',
-        maxPlayers: 10,
-        public: false,
-        noPlayer: true,
-        token
-    });
-};
 
 const findTokenInArgs = args => args.find(arg => arg.startsWith('thr1'));
 
@@ -49,8 +39,13 @@ const start = async () => {
                     );
                 }
 
-                const room = await createRoom(haxroomie, token);
-                message.reply(`Here's your room link: ${room.roomLink}`);
+                const secret = crypto.randomBytes(20).toString('hex');
+                const room = await createRoom(haxroomie, token, secret);
+                message.channel.send(`${message.author} created a room: ${room.roomLink}`);
+                message.author.send(
+                    `Your room has been created: ${room.roomLink}\n` +
+                    `Enter the following command in chat to get admin: \`!verify ${secret}\``
+                );
             } catch (e) {
                 const errorMessage = e.message === 'id must be unique'
                     ? 'Token already used. Please obtain another from https://www.haxball.com/headlesstoken'
