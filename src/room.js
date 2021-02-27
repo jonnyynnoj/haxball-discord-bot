@@ -1,7 +1,25 @@
+const inactiveMinutes = 10;
+
+const closeRoomAfterInactivePeriod = (roomController, haxroomie) => {
+    const createTimeout = () => {
+        return setTimeout(async () => {
+            await roomController.closeRoom();
+            haxroomie.removeRoom(roomController.id);
+        }, inactiveMinutes * 1000 * 60);
+    };
+
+    let timeout = createTimeout();
+
+    return () => {
+        clearTimeout(timeout);
+        timeout = createTimeout();
+    };
+}
+
 const createRoom = async (haxroomie, token, secret) => {
     const roomController = await haxroomie.addRoom(token);
 
-    return roomController.openRoom({
+    const room = await roomController.openRoom({
         roomName: 'haxroomie',
         maxPlayers: 10,
         public: false,
@@ -15,6 +33,14 @@ const createRoom = async (haxroomie, token, secret) => {
         },
         token
     });
+
+    const resetTimeout = closeRoomAfterInactivePeriod(roomController, haxroomie);
+
+    roomController.on('room-event', () => {
+        resetTimeout();
+    });
+
+    return room;
 };
 
 function getRoomScriptContent(secret) {
