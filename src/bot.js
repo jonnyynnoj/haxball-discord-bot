@@ -16,6 +16,13 @@ const start = async () => {
 
     client.on('ready', () => {
         console.log(`Logged in as ${client.user.tag}!`);
+
+        client.user.setPresence({
+            activity: {
+                name: 'Haxball | !createroom',
+                type: 'PLAYING'
+            },
+        });
     });
 
     client.on('message', async message => {
