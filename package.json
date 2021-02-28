@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "src/bot.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node ."
+  },
   "dependencies": {
     "discord.js": "^12.5.1",
     "haxroomie-core": "^2.5.0"
