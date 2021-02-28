@@ -5,7 +5,6 @@ const createRoom = require('./room');
 const config = require('../config.json');
 
 const client = new Discord.Client();
-const commandPrefix = '!';
 
 const findTokenInArgs = args => args.find(arg => arg.startsWith('thr1'));
 
@@ -26,11 +25,11 @@ const start = async () => {
     });
 
     client.on('message', async message => {
-        if (!message.content.startsWith(commandPrefix)) {
+        if (!message.content.startsWith(config.commandPrefix)) {
             return;
         }
 
-        const commandBody = message.content.slice(commandPrefix.length);
+        const commandBody = message.content.slice(config.commandPrefix.length);
         const args = commandBody.split(' ');
         const command = args.shift().toLowerCase();
 
