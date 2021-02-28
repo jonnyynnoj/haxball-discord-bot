@@ -20,7 +20,7 @@ const createRoom = async (haxroomie, roomName, token, secret) => {
     const roomController = await haxroomie.addRoom(token);
 
     const room = await roomController.openRoom({
-        maxPlayers: 10,
+        maxPlayers: 20,
         public: false,
         noPlayer: true,
         pluginConfig: {
