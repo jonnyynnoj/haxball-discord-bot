@@ -16,11 +16,10 @@ const closeRoomAfterInactivePeriod = (roomController, haxroomie) => {
     };
 }
 
-const createRoom = async (haxroomie, token, secret) => {
+const createRoom = async (haxroomie, roomName, token, secret) => {
     const roomController = await haxroomie.addRoom(token);
 
     const room = await roomController.openRoom({
-        roomName: 'haxroomie',
         maxPlayers: 10,
         public: false,
         noPlayer: true,
@@ -31,7 +30,8 @@ const createRoom = async (haxroomie, token, secret) => {
             name: 'haxball-discord-bot/commands',
             content: getRoomScriptContent(secret),
         },
-        token
+        roomName,
+        token,
     });
 
     const resetTimeout = closeRoomAfterInactivePeriod(roomController, haxroomie);

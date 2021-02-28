@@ -47,7 +47,14 @@ const start = async () => {
                 }
 
                 const secret = crypto.randomBytes(20).toString('hex');
-                const room = await createRoom(haxroomie, token, secret);
+
+                const room = await createRoom(
+                    haxroomie,
+                    `${message.author.username}'s room`,
+                    token,
+                    secret
+                );
+
                 message.channel.send(`${message.author} created a room: ${room.roomLink}`);
                 message.author.send(
                     `Your room has been created: ${room.roomLink}\n` +
