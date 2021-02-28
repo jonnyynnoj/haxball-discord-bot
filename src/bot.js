@@ -19,7 +19,7 @@ const start = async () => {
 
         client.user.setPresence({
             activity: {
-                name: 'Haxball | !createroom',
+                name: 'Haxball | !createroom !roomlist',
                 type: 'PLAYING'
             },
         });
@@ -34,7 +34,7 @@ const start = async () => {
         const args = commandBody.split(' ');
         const command = args.shift().toLowerCase();
 
-        if (command == 'createroom') {
+        if (command === 'createroom') {
             try {
                 const token = findTokenInArgs(args);
 
@@ -68,6 +68,17 @@ const start = async () => {
                 message.reply(`Failed to create a room: ${errorMessage}`);
                 console.log(e);
             }
+        } else if (command === 'roomlist') {
+            const rooms = haxroomie.getRooms();
+            const embed = new Discord.MessageEmbed({ title: 'Room List' });
+
+            if (!rooms.length) {
+                embed.setDescription('There are no open rooms currently');
+            } else {
+                rooms.forEach(room => embed.addField(room.roomInfo.roomName, room.roomInfo.roomLink));
+            }
+
+            message.reply(embed);
         }
     });
 
