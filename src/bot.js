@@ -65,7 +65,6 @@ const start = async () => {
                     : e.message;
 
                 message.reply(`Failed to create a room: ${errorMessage}`);
-                console.log(e);
             }
         } else if (command === 'roomlist') {
             const embed = new Discord.MessageEmbed({ title: 'Room List' });

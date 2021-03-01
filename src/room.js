@@ -37,7 +37,8 @@ const createRoom = async (haxroomie, roomName, token, secret) => {
     try {
         const room = await roomController.openRoom(roomConfig);
     } catch (e) {
-        return haxroomie.removeRoom(token);
+        await haxroomie.removeRoom(token);
+        throw e;
     }
 
     const resetTimeout = closeRoomAfterInactivePeriod(roomController, haxroomie);
