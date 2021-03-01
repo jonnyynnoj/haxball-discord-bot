@@ -68,8 +68,9 @@ const start = async () => {
                 console.log(e);
             }
         } else if (command === 'roomlist') {
-            const rooms = haxroomie.getRooms();
             const embed = new Discord.MessageEmbed({ title: 'Room List' });
+            const rooms = haxroomie.getRooms()
+                .filter(room => room.hhmLoaded);
 
             if (!rooms.length) {
                 embed.setDescription('There are no open rooms currently');
