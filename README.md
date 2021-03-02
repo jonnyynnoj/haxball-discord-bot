@@ -11,6 +11,7 @@ Clone the repository somewhere:
 ```
 git clone https://github.com/jonnyynnoj/haxball-discord-bot.git /app
 cd /app
+yarn install
 touch config.json
 ```
 
