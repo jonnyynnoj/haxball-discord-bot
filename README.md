@@ -17,7 +17,7 @@ touch config.json
 
 Fill `config.json` with the following contents, entering the token for your bot:
 
-```
+```json
 {
     "botToken": "your bot token here",
     "commandPrefix": "!",
@@ -27,7 +27,7 @@ Fill `config.json` with the following contents, entering the token for your bot:
 
 `roomOptions` follows the same structure as the [haxroomie config](https://morko.github.io/haxroomie/tutorial-haxroomie-cli-config.html) for a single room, ie:
 
-```
+```json
 "roomOptions": {
     "repositories": [{
         "type": "github",
