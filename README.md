@@ -19,7 +19,22 @@ Fill `config.json` with the following contents, entering the token for your bot:
 ```
 {
     "botToken": "your bot token here",
-    "commandPrefix": "!"
+    "commandPrefix": "!",
+    "roomOptions": {}
+}
+```
+
+`roomOptions` follows the same structure as the [haxroomie config](https://morko.github.io/haxroomie/tutorial-haxroomie-cli-config.html) for a single room, ie:
+
+```
+"roomOptions": {
+    "repositories": [{
+        "type": "github",
+        "repository": "morko/hhm-sala-plugins",
+    }],
+    "pluginConfig": {
+        "hr/pause": {}
+    }
 }
 ```
 

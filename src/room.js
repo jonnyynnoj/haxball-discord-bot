@@ -1,3 +1,5 @@
+const config = require('../config.json');
+
 const inactiveMinutes = 10;
 
 const closeRoomAfterInactivePeriod = (roomController, haxroomie) => {
@@ -18,25 +20,22 @@ const closeRoomAfterInactivePeriod = (roomController, haxroomie) => {
 
 const createRoom = async (haxroomie, roomName, token, secret) => {
     const roomController = await haxroomie.addRoom(token);
-
-    const roomConfig = {
-        maxPlayers: 20,
+    
+    const roomOptions = {
         public: false,
         noPlayer: true,
-        pluginConfig: {
-            'sav/commands': {}
-        },
         roomScript: {
             name: 'haxball-discord-bot/commands',
             content: getRoomScriptContent(secret),
         },
         roomName,
         token,
+        ...config.roomOptions
     };
 
     let room;
     try {
-        room = await roomController.openRoom(roomConfig);
+        room = await roomController.openRoom(roomOptions);
     } catch (e) {
         await haxroomie.removeRoom(token);
         throw e;
